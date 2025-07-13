@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Przyciski GitHub Pages</title>
+  <title>Przyciski + licznik odwiedzin</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,7 +20,12 @@
       height: 100px;
       background-color: #007bff;
       margin-top: 20px;
-      display: none; /* ukryty na start */
+      display: none;
+    }
+    #counter {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -32,9 +37,11 @@
 
   <div id="square"></div>
 
+  <div id="counter">Ładowanie licznika...</div>
+
   <script>
+    // Przycisk GitHub - zmień na swój URL
     document.getElementById('btnGithub').addEventListener('click', () => {
-      // Zamień URL poniżej na swoją stronę GitHub Pages
       window.location.href = 'https://twojanazwa.github.io/';
     });
 
@@ -44,14 +51,24 @@
 
     document.getElementById('btnSquare').addEventListener('click', () => {
       const square = document.getElementById('square');
-      if (square.style.display === 'none') {
-        square.style.display = 'block';
-      } else {
-        square.style.display = 'none';
-      }
+      square.style.display = square.style.display === 'none' ? 'block' : 'none';
     });
+
+    // Licznik odwiedzin z countapi.xyz
+    const counterEl = document.getElementById('counter');
+    const namespace = 'diwi-githubpages'; // unikalna nazwa namespace, możesz zmienić
+    const key = 'page-visits'; // klucz strony
+
+    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+      .then(response => response.json())
+      .then(data => {
+        counterEl.textContent = `Liczba odwiedzin strony: ${data.value}`;
+      })
+      .catch(() => {
+        counterEl.textContent = 'Błąd ładowania licznika.';
+      });
   </script>
 
-</body>
-<
-  /html>
+</body
+  >
+</html>
