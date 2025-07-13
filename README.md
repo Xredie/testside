@@ -1,2 +1,2 @@
 # testside
-się for test
+side for test
