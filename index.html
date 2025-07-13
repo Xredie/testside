@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Przyciski + licznik odwiedzin</title>
+  <title>Przyciski + licznik + ładowanie</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -26,6 +26,23 @@
       margin-top: 30px;
       font-size: 20px;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* Kulka ładowania */
+    .loader {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #007bff;
+      border-top: 3px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
@@ -37,10 +54,12 @@
 
   <div id="square"></div>
 
-  <div id="counter">Ładowanie licznika...</div>
+  <div id="counter">
+    <div class="loader"></div>
+    <div id="counterText">Ładowanie licznika...</div>
+  </div>
 
   <script>
-    // Przycisk GitHub - zmień na swój URL
     document.getElementById('btnGithub').addEventListener('click', () => {
       window.location.href = 'https://twojanazwa.github.io/';
     });
@@ -55,17 +74,17 @@
     });
 
     // Licznik odwiedzin z countapi.xyz
-    const counterEl = document.getElementById('counter');
-    const namespace = 'diwi-githubpages'; // unikalna nazwa namespace, możesz zmienić
-    const key = 'page-visits'; // klucz strony
+    const counterText = document.getElementById('counterText');
+    const namespace = 'diwi-githubpages';
+    const key = 'page-visits';
 
     fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
       .then(response => response.json())
       .then(data => {
-        counterEl.textContent = `Liczba odwiedzin strony: ${data.value}`;
+        counterText.textContent = `Liczba odwiedzin strony: ${data.value}`;
       })
       .catch(() => {
-        counterEl.textContent = 'Błąd ładowania licznika.';
+        counterText.textContent = 'Błąd ładowania licznika.';
       });
   </script>
 
